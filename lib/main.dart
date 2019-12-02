@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/dart_type.dart';
+import 'package:my_app/flutter_layout.dart';
 import 'package:my_app/opp.dart';
 import 'package:my_app/plugin_use.dart';
 import 'package:my_app/stateful_widget.dart';
 
-void main() => runApp(StatefulGroupTest());
+void main() => runApp(FlutterLayout());
 
 class MyApp extends StatelessWidget {
   @override

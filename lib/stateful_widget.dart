@@ -48,8 +48,40 @@ class _StatefulGroupTestState extends State<StatefulGroupTest> {
             ]),
         body: _currentIndex == 0
             ? RefreshIndicator(
-                child:
-                ListView(children:[Text("路飞"),Text("乔巴"),Text("娜美")]),
+                child: ListView(children: [
+                  Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: <Widget>[
+                        Image.network(
+                          "http://www.devio.org/img/avatar.png",
+                          width: 100,
+                          height: 100,
+                        ),
+                        TextField(
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                            hintText: "请输入",
+                            hintStyle: TextStyle(fontSize: 15)
+                          )
+                        ),
+                        Container(
+                          height: 100,
+                          margin: EdgeInsets.only(top: 10),
+                          decoration: BoxDecoration(color: Colors.lightBlueAccent),
+                          child: PageView(
+                            children: <Widget>[
+                              _item("page1",Colors.deepPurple),
+                              _item("page2",Colors.deepPurple),
+                              _item("page3",Colors.deepPurple),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ]),
                 onRefresh: _refreshCallBack,
               )
             : Text("列表界面"),
@@ -60,5 +92,14 @@ class _StatefulGroupTestState extends State<StatefulGroupTest> {
   Future<Null> _refreshCallBack() async {
     await Future.delayed(Duration(milliseconds: 2000));
     return null;
+  }
+
+  _item(String s, Color color) {
+    return Container(
+      child: Text(s,style: TextStyle(fontSize: 20,color: Colors.white),),
+      decoration: BoxDecoration(color:color ),
+      alignment: Alignment.center,
+    );
+
   }
 }
