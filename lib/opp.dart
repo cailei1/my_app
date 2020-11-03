@@ -1,3 +1,7 @@
+/**
+ * 面向对象的学习
+ */
+
 class Person {
   String _name;
   String _age;
