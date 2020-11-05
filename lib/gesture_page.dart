@@ -33,7 +33,9 @@ class _GesturePageState extends State<GesturePage> {
                     onDoubleTap: _printMsg("双击"),
                     onLongPress: _printMsg("长按"),
                     onTapCancel: _printMsg("取消"),
-                  )
+                    child: Text("点我",style: TextStyle(color:Colors.red,fontSize: 18),),
+                  ),
+                  Text(_printString)
                 ],
               )
             ],

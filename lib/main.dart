@@ -1,25 +1,58 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:my_app/app_lifecycle.dart';
 import 'package:my_app/dart_type.dart';
 import 'package:my_app/flutter_layout.dart';
+import 'package:my_app/gesture_page.dart';
 import 'package:my_app/opp.dart';
 import 'package:my_app/plugin_use.dart';
 import 'package:my_app/stateful_widget.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(DynamicTheme());
 
-class MyApp extends StatelessWidget {
+class DynamicTheme extends StatefulWidget {
+  @override
+  _DynamicThemeState createState() => _DynamicThemeState();
+}
+
+class _DynamicThemeState extends State<DynamicTheme> {
+  Brightness _brightness=Brightness.dark;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Dart 基础',
       theme: ThemeData(
+        brightness: _brightness,
         primarySwatch: Colors.blue,
       ),
-      home: RouteNavigator(title: 'Flutter Dart 基础哈哈哈'),
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text("xixihaha"),
+          ),
+          body: Column(
+            children: <Widget>[
+              RaisedButton(
+                  onPressed: () {
+                    setState(() {
+                      if (_brightness == Brightness.light) {
+                        _brightness = Brightness.dark;
+                      } else {
+                        _brightness = Brightness.light;
+                      }
+                    });
+                  },
+                  child: Text("点我更换主题",
+                      style: TextStyle(color: Colors.red, fontSize: 20))),
+              RouteNavigator(title: 'Flutter Dart 基础哈哈哈'),
+            ],
+          )),
       routes: <String, WidgetBuilder>{
         "ful": (BuildContext context) => StatefulGroupTest(),
         "layout": (BuildContext context) => FlutterLayout(),
         "plugin": (BuildContext context) => PluginTest(),
+        "gesture": (BuildContext context) => GesturePage()
       },
     );
   }
@@ -47,28 +80,23 @@ class _RouteNavigatorState extends State<RouteNavigator> {
   @override
   Widget build(BuildContext context) {
     _oopLearn();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+    return Center(
+        child: ListView(children: <Widget>[
+      SwitchListTile(
+        title: Text("${byName ? "" : "不"}通过路由名跳转"),
+        value: byName,
+        onChanged: (value) {
+          setState(() {
+            byName = value;
+          });
+        },
       ),
-      body: Center(
-          child: ListView(
-        children: <Widget>[
-          SwitchListTile(
-            title: Text("${byName ? "" : "不"}通过路由名跳转"),
-            value: byName,
-            onChanged: (value) {
-              setState(() {
-                byName = value;
-              });
-            },
-          ),
-          _item("StatelessWidget与基础组件", StatefulGroupTest(), "ful"),
-          _item("StatelessWidget与基础布局", StatefulGroupTest(), "layout"),
-          _item("StatelessWidget与基础插件和包的使用", StatefulGroupTest(), "plugin"),
-        ],
-      )),
-    );
+      _item("StatelessWidget与基础组件", StatefulGroupTest(), "ful"),
+      _item("StatelessWidget与基础布局", FlutterLayout(), "layout"),
+      _item("StatelessWidget与基础插件和包的使用", PluginTest(), "plugin"),
+      _item("手势操作", GesturePage(), "gesture"),
+      _item("app 生命周期监测", AppLifeCycle(), "appLife"),
+    ], shrinkWrap: true));
   }
 
   void _oopLearn() {
